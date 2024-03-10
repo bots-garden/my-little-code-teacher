@@ -159,6 +159,15 @@
               responseText = responseText + "\n"
               txtResponse.innerHTML = markdownit().render(responseText)
 
+              // copy paste the source code
+              /*
+              document.querySelectorAll("pre code").forEach(element => {
+                element.addEventListener("click", async _ => {
+                  navigator.clipboard.writeText(element.innerText)
+                })	
+              })
+              */
+
               return
             }
             // Otherwise do something here to process current chunk
@@ -173,6 +182,14 @@
             console.log("✋", "Fetch request aborted")
             txtPrompt.value = ""
             aborter = new AbortController()
+
+            /*
+            document.querySelectorAll("pre code").forEach(element => {
+              element.addEventListener("click", async _ => {
+                navigator.clipboard.writeText(element.innerText)
+              })	
+            })
+            */
 
             try {
               const response = await fetch("/cancel-request", {
@@ -234,8 +251,6 @@
         hiddenElement.download = 'answer.md'
         hiddenElement.click()
       }
-
-
 
       btnDownload.addEventListener("click", async _ => {
         download_txt(responseText)

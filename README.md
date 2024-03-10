@@ -27,7 +27,6 @@ LLM=deepseek-coder OLLAMA_BASE_URL=http://host.docker.internal:11434 docker comp
 docker compose --env-file deepseek-coder-instruct.env --profile webapp up
 ```
 
-
 ## Open the Web UI
 
 http://localhost:8080
