@@ -39,5 +39,5 @@ cd webapp
 # yarn install
 LLM=deepseek-coder
 OLLAMA_BASE_URL=http://localhost:11434 
-node index.js
+node index.mjs
 ```
