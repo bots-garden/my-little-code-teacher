@@ -1,6 +1,8 @@
 FROM node:21-bookworm as builder
 ARG OLLAMA_BASE_URL
 ENV OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
+ARG LLM
+ENV LLM=${LLM}
 WORKDIR /app
 COPY package.json .
 RUN yarn install

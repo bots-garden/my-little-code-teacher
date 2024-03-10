@@ -173,6 +173,16 @@
             console.log("✋", "Fetch request aborted")
             txtPrompt.value = ""
             aborter = new AbortController()
+
+            try {
+              const response = await fetch("/cancel-request", {
+                method: "DELETE",
+              })
+              console.log(response)
+            } catch(error) {
+              console.log("😡", error)
+            }
+
           } else {
             console.log("😡", error)
           }

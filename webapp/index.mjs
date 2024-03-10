@@ -17,10 +17,11 @@ import {
 } from "@langchain/core/prompts"
 
 let ollama_base_url = process.env.OLLAMA_BASE_URL
+let llm_name = process.env.LLM
 
 const model = new ChatOllama({
   baseUrl: ollama_base_url,
-  model: "deepseek-coder", 
+  model: llm_name, 
   temperature: 0,
   repeatPenalty: 1,
   verbose: true,
@@ -30,6 +31,8 @@ const memory = new ConversationSummaryMemory({
   memoryKey: "history",
   llm: model,
 })
+
+var controller = new AbortController()
 
 const prompt = ChatPromptTemplate.fromMessages([
   SystemMessagePromptTemplate.fromTemplate(
@@ -67,10 +70,20 @@ fastify.get('/message-history', async (request, reply) => {
   return memory.chatHistory.getMessages()
 })
 
+fastify.delete('/cancel-request', async (request, reply) => {
+  console.log("👋 cancel request")
+  controller.abort()
+  // recreate the abort controller
+  var controller = new AbortController()
+  return "👋 request aborted"
+})
+
 fastify.post('/prompt', async (request, reply) => {
   const question = request.body["question"]
 
   const outputParser = new StringOutputParser()
+
+  model.bind({ signal: controller.signal })
 
   const chain = prompt.pipe(model).pipe(outputParser)
   

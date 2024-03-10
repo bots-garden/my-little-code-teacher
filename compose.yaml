@@ -10,7 +10,7 @@ services:
   download-deepseek-coder-llm:
     profiles: [container]
     image: curlimages/curl:8.6.0
-    entrypoint: ["curl", "ollama-service:11434/api/pull", "-d", '{"name": "deepseek-coder"}']
+    entrypoint: ["curl", "ollama-service:11434/api/pull", "-d", "{\"name\": \"${LLM}\"}"]
     depends_on:
       ollama-service:
         condition: service_started
@@ -21,7 +21,8 @@ services:
       context: ./webapp
       dockerfile: Dockerfile
     environment:
-      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL-http://host.docker.internal:11434}
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
+      - LLM=${LLM}
       # host.docker.internal: listening the host from the container
     ports:
       - 8080:8080

@@ -3,8 +3,8 @@
 ## Run all in containers
 
 ```bash
-OLLAMA_BASE_URL=http://ollama-service:11434 docker compose --profile container up
-# or OLLAMA_BASE_URL=http://ollama-service:11434 docker compose --profile container watch
+LLM=deepseek-coder OLLAMA_BASE_URL=http://ollama-service:11434 docker compose --profile container up
+# or LLM=deepseek-coder OLLAMA_BASE_URL=http://ollama-service:11434 docker compose --profile container watch
 ```
 > The first time only, you must wait for the complete downlading of the model.
 
@@ -12,14 +12,32 @@ OLLAMA_BASE_URL=http://ollama-service:11434 docker compose --profile container u
 
 > To do for the first time only:
 ```bash
-ollama pull deepseek-coder
+LLM=deepseek-coder
+ollama pull ${LLM}
 ```
 
 ```bash
- docker compose --profile webapp up
- # or docker compose --profile webapp watch
+LLM=deepseek-coder OLLAMA_BASE_URL=http://host.docker.internal:11434 docker compose --profile webapp up
+# or LLM=deepseek-coder OLLAMA_BASE_URL=http://host.docker.internal:11434 docker compose --profile webapp watch
 ```
+
+## Use a specific env file
+
+```bash
+docker compose --env-file deepseek-coder-instruct.env --profile webapp up
+```
+
 
 ## Open the Web UI
 
 http://localhost:8080
+
+## Development
+
+```bash
+cd webapp
+# yarn install
+LLM=deepseek-coder
+OLLAMA_BASE_URL=http://localhost:11434 
+node index.js
+```
