@@ -6,7 +6,7 @@
 LLM=deepseek-coder OLLAMA_BASE_URL=http://ollama-service:11434 docker compose --profile container up
 # or LLM=deepseek-coder OLLAMA_BASE_URL=http://ollama-service:11434 docker compose --profile container watch
 ```
-> The first time only, you must wait for the complete downlading of the model.
+> The first time only, you must wait for the complete downloading of the model.
 
 ## Use the native Ollama install
 
